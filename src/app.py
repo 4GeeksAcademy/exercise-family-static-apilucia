@@ -6,6 +6,7 @@ from flask import Flask, request, jsonify, url_for
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from datastructures import FamilyStructure
+import json
 #from models import Person
 
 app = Flask(__name__)
@@ -27,16 +28,44 @@ def sitemap():
 
 @app.route('/members', methods=['GET'])
 def handle_hello():
-
+    # if (status > 400) {
+    #     return("error en solicitud")
+    # }
     # this is how you can use the Family datastructure by calling its methods
-    members = jackson_family.get_all_members()
-    response_body = {
-        "hello": "world",
-        "family": members
-    }
+    members = jackson_family.get_all_members()#trae el class y de ahi la funcion all members
+  
+    return jsonify(members), 200
 
 
-    return jsonify(response_body), 200
+#agregar un miembro
+@app.route('/member', methods=['POST'])
+def add_member():
+    new_member = json.loads(request.data)
+
+    jackson_family.add_member(new_member)
+
+
+
+    return jsonify(new_member), 200
+
+#borrar un miembro
+@app.route('/member/<int:member_id>', methods=['DELETE'])
+def delete_member(member_id):
+
+    jackson_family.delete_member(member_id)
+
+
+
+    return jsonify({"done" : True}), 200
+
+#traer un miembro
+@app.route('/member/<int:member_id>', methods=['GET'])
+def get_single_member(member_id):
+    member = jackson_family.get_member(member_id)
+
+    return jsonify(member), 200
+
+
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
