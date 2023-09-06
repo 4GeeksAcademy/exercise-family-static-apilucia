@@ -9,10 +9,11 @@ update this file to implement the following already declared methods:
 from random import randint
 
 class FamilyStructure:
+    #Inicializa la clase con el apellido proporcionado que queda fijo
     def __init__(self, last_name):
         self.last_name = last_name
 
-        # example list of members
+        # lista inicial de miembros ficticios, la lista que guardada en self._members
         self._members = [{
             "id": self._generateId(),
             "first_name": "John",
@@ -41,22 +42,22 @@ class FamilyStructure:
 
     def add_member(self, member):
      
-        self._members.append(member)
+        self._members.append(member)#self._member es la lista append agrega member(o sea el miembro que quiero agregar) a la lista
 
-        return None
+        return None #le pido que no retorne nada
         pass
 
     def delete_member(self, id):
-        for member in self._members:
-            if member ["id"] == id:
-                self._members.remove(member)
-                return self._members
+        for member in self._members:#para un miembro en la lista 
+            if member ["id"] == id:# si el id del miembro que ingreso coincide con el id de alguno de los de la lista 
+                self._members.remove(member)#elimino de la lista el miembro
+                return self._members#devuleve la nueva lista sin el miembro
         
     
     def get_member(self, id):
-        for member in self._members:
-            if member ["id"] == id:
-                return member
+        for member in self._members:#para el miembro en la lista
+            if member ["id"] == id:#si coincide la id que pido con uno de la lista
+                return member# me retorna ese miembro
 
 
 
